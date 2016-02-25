@@ -1,6 +1,6 @@
 # ReactNativeTencentXG
 
-React Native component for Tencent message push service XinGe http://xg.qq.com/
+React Native component for Tencent message push service XinGe(腾讯信鸽) http://xg.qq.com/
 
 # Installation
 
@@ -10,11 +10,17 @@ npm install --save react-native-tencent-xg
 
 ## Android
 
+1.
 1. Follow the official tutorial to modify Androidmanifest.xml file.
 2. Call react-native-tencent-xg API to register and handle message.
 
 ## iOS
 
-** Uncompeleted **
+** Uncompleted **
 
 # API
+
+# TODO
+- [ ] For iOS
+- [ ] Implements a Push Receiver
+- [ ] Complete API documentation
