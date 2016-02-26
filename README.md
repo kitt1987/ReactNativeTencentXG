@@ -20,6 +20,10 @@ npm install --save react-native-tencent-xg
 
 # API
 
+** var XG = require('react-native-tencent-xg') **
+
+
+
 # TODO
 - [ ] For iOS
 - [ ] Implements a Push Receiver

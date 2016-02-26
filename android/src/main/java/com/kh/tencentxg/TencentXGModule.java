@@ -102,14 +102,14 @@ public class TencentXGModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void addLocalNotification(String title, String content, String date, String hour, String minute) {
-      XGLocalMessage local_msg = new XGLocalMessage();
-      local_msg.setType(1);
-  		local_msg.setTitle(title);
-  		local_msg.setContent(content);
-  		local_msg.setDate(date);
-  		local_msg.setHour(hour);
-  		local_msg.setMin(minute);
-  		XGPushManager.addLocalNotification(this.context, local_msg);
+        XGLocalMessage local_msg = new XGLocalMessage();
+        local_msg.setType(1);
+    		local_msg.setTitle(title);
+    		local_msg.setContent(content);
+    		local_msg.setDate(date);
+    		local_msg.setHour(hour);
+    		local_msg.setMin(minute);
+    		XGPushManager.addLocalNotification(this.context, local_msg);
     }
 
     // XGPushConfig
