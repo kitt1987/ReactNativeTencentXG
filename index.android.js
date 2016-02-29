@@ -11,6 +11,10 @@ function enableDebug(enable) {
   XG.enableDebug(enable);
 }
 
+function getDeviceToken() {
+  return XG.getDeviceToken();
+}
+
 function setCredential(accessId, accessKey) {
   XG.setCredential(accessId, accessKey);
 }
@@ -30,15 +34,16 @@ function sendLocalNotification(title, content, triggerTsInus) {
 }
 
 function addEventListener(event, listener) {
-
+  throw new Error('unimplemented');
 }
 
 function removeEventListener(event, listener) {
-
+  throw new Error('unimplemented');
 }
 
 module.exports = {
   enableDebug,
+  getDeviceToken,
   setCredential,
   register,
   sendLocalNotification,

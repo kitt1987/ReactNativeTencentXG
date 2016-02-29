@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EAB2B20D1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = EAB2B20C1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.h */; };
-		EAB2B20F1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB2B20E1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.m */; };
+		EAEFE9841C83D84A004DD9CB /* ReactNativeTencentXG.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEFE9821C83D84A004DD9CB /* ReactNativeTencentXG.m */; };
+		EAEFE9AC1C83E3C3004DD9CB /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEFE9AB1C83E3C3004DD9CB /* libXG-SDK.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -18,7 +18,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				EAB2B20D1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -26,8 +25,9 @@
 
 /* Begin PBXFileReference section */
 		EAB2B2091C7FE3FD00D6D4F3 /* libReactNativeTencentXG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeTencentXG.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAB2B20C1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactNativeTencentXG.h; sourceTree = "<group>"; };
-		EAB2B20E1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeTencentXG.m; sourceTree = "<group>"; };
+		EAEFE9821C83D84A004DD9CB /* ReactNativeTencentXG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactNativeTencentXG.m; sourceTree = SOURCE_ROOT; };
+		EAEFE9831C83D84A004DD9CB /* ReactNativeTencentXG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactNativeTencentXG.h; sourceTree = SOURCE_ROOT; };
+		EAEFE9AB1C83E3C3004DD9CB /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libXG-SDK.a"; path = "sdk/libXG-SDK.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAEFE9AC1C83E3C3004DD9CB /* libXG-SDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +45,7 @@
 		EAB2B2001C7FE3FD00D6D4F3 = {
 			isa = PBXGroup;
 			children = (
+				EAEFE9AB1C83E3C3004DD9CB /* libXG-SDK.a */,
 				EAB2B20B1C7FE3FD00D6D4F3 /* ReactNativeTencentXG */,
 				EAB2B20A1C7FE3FD00D6D4F3 /* Products */,
 			);
@@ -60,8 +62,8 @@
 		EAB2B20B1C7FE3FD00D6D4F3 /* ReactNativeTencentXG */ = {
 			isa = PBXGroup;
 			children = (
-				EAB2B20C1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.h */,
-				EAB2B20E1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.m */,
+				EAEFE9821C83D84A004DD9CB /* ReactNativeTencentXG.m */,
+				EAEFE9831C83D84A004DD9CB /* ReactNativeTencentXG.h */,
 			);
 			path = ReactNativeTencentXG;
 			sourceTree = "<group>";
@@ -122,7 +124,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAB2B20F1C7FE3FD00D6D4F3 /* ReactNativeTencentXG.m in Sources */,
+				EAEFE9841C83D84A004DD9CB /* ReactNativeTencentXG.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,9 +216,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../Example/node_modules/react-native/React/**",
-					"$(SRCROOT)/../Example/node_modules/react-native/Libraries/**",
+					"$(SRCROOT)/../../react-native/React/**",
 					"$(PROJECT_DIR)/sdk",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -234,9 +234,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../Example/node_modules/react-native/React/**",
-					"$(SRCROOT)/../Example/node_modules/react-native/Libraries/**",
+					"$(SRCROOT)/../../react-native/React/**",
 					"$(PROJECT_DIR)/sdk",
 				);
 				LIBRARY_SEARCH_PATHS = (

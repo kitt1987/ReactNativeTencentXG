@@ -4,6 +4,7 @@ import java.lang.Exception;
 
 import android.content.Context;
 import android.util.Log;
+import android.content.IntentFilter;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -14,6 +15,11 @@ import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGLocalMessage;
+import com.tencent.android.tpush.XGPushBaseReceiver;
+import com.tencent.android.tpush.XGPushTextMessage;
+import com.tencent.android.tpush.XGPushShowedResult;
+import com.tencent.android.tpush.XGPushClickedResult;
+import com.tencent.android.tpush.XGPushRegisterResult;
 
 public class TencentXGModule extends ReactContextBaseJavaModule {
 
