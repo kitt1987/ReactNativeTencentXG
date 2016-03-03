@@ -4,10 +4,6 @@
   "private": true,
   "scripts": {
   },
-  "jshintConfig": {
-    "node": true,
-    "esnext": true
-  },
   "dependencies": {
     "react-native": "^0.20.0"
   }

@@ -21,13 +21,13 @@ RCT_EXPORT_METHOD(enableDebug:(BOOL)enable)
 }
 
 RCT_EXPORT_METHOD(registerDevice:(NSString *)deviceToken)
-{
+{    
     [XGPush registerDeviceStr: deviceToken];
 }
 
-RCT_EXPORT_METHOD(startAPP:(uint32_t)appId appKey:(NSString *)appKey)
+RCT_EXPORT_METHOD(startAPP:(nonnull NSNumber *)appId appKey:(NSString *)appKey)
 {
-    [XGPush startApp:appId appKey:appKey];
+    [XGPush startApp:appId.unsignedIntValue appKey:appKey];
 }
 
 RCT_EXPORT_METHOD(setAccount:(NSString *)account)
