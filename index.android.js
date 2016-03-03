@@ -20,8 +20,8 @@ function setCredential(accessId, accessKey) {
 }
 
 function register(account, ticket, ticketType, qua) {
-  if (ticket) return XG.registerPushWithTicketThen(account, ticket, ticketType, qua);
-  if (account) return XG.registerPushAndBindAccountThen(account);
+  if (ticket) return XG.registerPushWithTicketThen('' + account, ticket, ticketType, qua);
+  if (account) return XG.registerPushAndBindAccountThen('' + account);
   return XG.registerPushThen();
 }
 

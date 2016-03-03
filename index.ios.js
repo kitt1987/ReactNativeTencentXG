@@ -11,28 +11,27 @@ function enableDebug(enable) {
   XG.enableDebug(enable);
 }
 
-function getDeviceToken() {
-  return new Promise((resolve, reject) => {
-    PushNotification.addEventListener('register', resolve);
-  });
-}
-
 function setCredential(accessId, accessKey) {
-  XG.setCredential(accessId, accessKey);
+  XG.startAPP(accessId, accessKey);
 }
 
-function register(account, ticket, ticketType, qua) {
+function register(account, deviceToken) {
+  XG.registerDevice(deviceToken);
+  if (account) XG.setAccount('' + account);
+  return Promise.resolve(deviceToken);
 }
 
 function sendLocalNotification(title, content, triggerTsInus) {
-  PushNotificationIOS.presentLocalNotification({
-    alertBody: 'local notification'
-  });
-  // var date = new Date(triggerTsInus);
-  // var dateString = '' + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
-  // var hourString = '' + date.getHours();
-  // var minuteString = '' + date.getMinutes();
-  // XG.addLocalNotification(title, content, dateString, hourString, minuteString);
+  if (triggerTsInus) {
+    PushNotificationIOS.scheduleLocalNotification({
+      alertBody: content,
+      fireDate: triggerTsInus
+    });
+  } else {
+    PushNotificationIOS.presentLocalNotification({
+      alertBody: content,
+    });
+  }
 }
 
 function addEventListener(event, listener) {
@@ -45,7 +44,6 @@ function removeEventListener(event, listener) {
 
 module.exports = {
   enableDebug,
-  getDeviceToken,
   setCredential,
   register,
   sendLocalNotification,
