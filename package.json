@@ -1,7 +1,11 @@
 {
   "name": "react-native-tencent-xg",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:kitt1987/ReactNativeTencentXG.git"
   },
   "peerDependencies": {
     "react-native": ">=0.20"
@@ -12,5 +16,5 @@
     "react-native",
     "tencent",
     "xinge"
-  ],
+  ]
 }
