@@ -23,8 +23,8 @@ class sample extends Component {
   componentDidMount() {
     XG.enableDebug(true);
     // Your accessId as number and your accessKey
-    const accessIdInNumber = 2100182505;// 0;
-    const accessKey = 'A5J92KR9D8IE';//'Your access key';
+    const accessIdInNumber = 0;
+    const accessKey = 'Your access key';
     XG.setCredential(accessIdInNumber, accessKey);
     XG.register('SampleTester')
       .then(devToken => {
