@@ -43,7 +43,7 @@ function removeEventListener(event, listener) {
 
 module.exports = {
   enableDebug,
-  getDeviceToken,
+  // getDeviceToken,
   setCredential,
   register,
   sendLocalNotification,

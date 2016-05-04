@@ -1,52 +1,41 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
-var { NativeModules, PushNotificationIOS } = require('react-native');
+import {
+  NativeModules,
+  NativeAppEventEmitter
+} from 'react-native';
+
 var XG = NativeModules.TencentXG;
 
-function enableDebug(enable) {
-  XG.enableDebug(enable);
-}
-
-function setCredential(accessId, accessKey) {
-  XG.startAPP(accessId, accessKey);
-}
-
-function register(account, deviceToken) {
-  XG.registerDevice(deviceToken);
-  if (account) XG.setAccount('' + account);
-  return Promise.resolve(deviceToken);
-}
-
-function sendLocalNotification(title, content, triggerTsInus) {
-  if (triggerTsInus) {
-    PushNotificationIOS.scheduleLocalNotification({
-      alertBody: content,
-      fireDate: triggerTsInus
-    });
-  } else {
-    PushNotificationIOS.presentLocalNotification({
-      alertBody: content,
-    });
-  }
+function allEvents() {
+  return [
+    XG.LocalNotificationEvent,
+    XG.RemoteNotificationEvent,
+    XG.RegisteredEvent,
+    XG.FailureEvent
+  ];
 }
 
 function addEventListener(event, listener) {
-  throw new Error('unimplemented');
-}
-
-function removeEventListener(event, listener) {
-  throw new Error('unimplemented');
+  if (allEvents().indexOf(event) < 0) return;
+  return NativeAppEventEmitter.addListener(
+    event, listener
+  );
 }
 
 module.exports = {
-  enableDebug,
-  setCredential,
-  register,
-  sendLocalNotification,
   addEventListener,
-  removeEventListener
+  allEvents,
+  enableDebug: enable => XG.enableDebug(enable || true),
+  setCredential: (accessId, accessKey) => XG.setCredential(accessId, accessKey),
+  register: (account, permissions) => XG.register(account, permissions),
+  checkPermissions: () => XG.checkPermissions(),
+  getApplicationIconBadgeNumber: () => XG.getApplicationIconBadgeNumber(),
+  presentLocalNotification: obj => XG.presentLocalNotification(obj),
+  scheduleLocalNotification: obj => XG.scheduleLocalNotification(obj),
+  cancelLocalNotifications: () => XG.cancelLocalNotifications(),
+  cancelAllLocalNotifications: () => XG.cancelAllLocalNotifications(),
+  setTag: tag => XG.setTag(tag),
+  delTag: tag => XG.delTag(tag),
+  unregister: () => XG.unRegisterDevice(),
 };

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA1AB57D1CD9A9930011EDAA /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA1AB57C1CD9A9930011EDAA /* libXG-SDK.a */; };
 		EAEFE9841C83D84A004DD9CB /* ReactNativeTencentXG.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEFE9821C83D84A004DD9CB /* ReactNativeTencentXG.m */; };
-		EAEFE9AC1C83E3C3004DD9CB /* libXG-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAEFE9AB1C83E3C3004DD9CB /* libXG-SDK.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,10 +24,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EA1AB57C1CD9A9930011EDAA /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libXG-SDK.a"; path = "sdk/libXG-SDK.a"; sourceTree = "<group>"; };
 		EAB2B2091C7FE3FD00D6D4F3 /* libReactNativeTencentXG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeTencentXG.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAEFE9821C83D84A004DD9CB /* ReactNativeTencentXG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactNativeTencentXG.m; sourceTree = SOURCE_ROOT; };
 		EAEFE9831C83D84A004DD9CB /* ReactNativeTencentXG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactNativeTencentXG.h; sourceTree = SOURCE_ROOT; };
-		EAEFE9AB1C83E3C3004DD9CB /* libXG-SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libXG-SDK.a"; path = "sdk/libXG-SDK.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAEFE9AC1C83E3C3004DD9CB /* libXG-SDK.a in Frameworks */,
+				EA1AB57D1CD9A9930011EDAA /* libXG-SDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +45,7 @@
 		EAB2B2001C7FE3FD00D6D4F3 = {
 			isa = PBXGroup;
 			children = (
-				EAEFE9AB1C83E3C3004DD9CB /* libXG-SDK.a */,
+				EA1AB57C1CD9A9930011EDAA /* libXG-SDK.a */,
 				EAB2B20B1C7FE3FD00D6D4F3 /* ReactNativeTencentXG */,
 				EAB2B20A1C7FE3FD00D6D4F3 /* Products */,
 			);
@@ -148,6 +148,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -167,7 +168,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/sdk",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/sdk",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -191,6 +200,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -204,7 +214,15 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/sdk",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/sdk",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -218,7 +236,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(PROJECT_DIR)/sdk",
-					"$(SRCROOT)/../../react-native/Libraries/PushNotificationIOS/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -237,7 +254,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(PROJECT_DIR)/sdk",
-					"$(SRCROOT)/../../react-native/Libraries/PushNotificationIOS/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
