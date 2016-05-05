@@ -31,7 +31,7 @@ function sendLocalNotification(title, content, triggerTsInus) {
 
 function addEventListener(event, listener) {
   if (allEvents().indexOf(event) < 0) return;
-  DeviceEventEmitter.addListener(event, listener);
+  return DeviceEventEmitter.addListener(event, listener);
 }
 
 function nothing() {}
