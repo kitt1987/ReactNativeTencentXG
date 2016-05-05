@@ -4,11 +4,18 @@ import java.lang.Exception;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.content.IntentFilter;
 
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -27,11 +34,12 @@ import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
 
-public class TencentXGModule extends ReactContextBaseJavaModule {
+public class TencentXGModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
     private Context context;
     private ReactApplicationContext reactContext;
-    private static final String TAG = "TencentXG";
+    private BroadcastReceiver innerReceiver;
+    private static final String LogTag = "TencentXG";
     private static final String RCTLocalNotificationEvent = "localNotification";
     private static final String RCTRemoteNotificationEvent = "notification";
     private static final String RCTRegisteredEvent = "register";
@@ -41,6 +49,18 @@ public class TencentXGModule extends ReactContextBaseJavaModule {
         super(reactContext);
         this.reactContext = reactContext;
         this.context = reactContext.getApplicationContext();
+        innerReceiver = new InnerMessageReceiver(this);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(XGMessageReceiver.MActionNotification);
+        filter.addAction(XGMessageReceiver.MActionCustomNotification);
+        filter.addAction(XGMessageReceiver.MActionUnregister);
+        filter.addAction(XGMessageReceiver.MActionRegistration);
+        filter.addAction(XGMessageReceiver.MActionTagSetting);
+        filter.addAction(XGMessageReceiver.MActionTagDeleting);
+        filter.addAction(XGMessageReceiver.MActionClickNotification);
+        LocalBroadcastManager.getInstance(this.context).registerReceiver(this.innerReceiver, filter);
+        reactContext.addLifecycleEventListener(this);
     }
 
     @Override
@@ -148,10 +168,87 @@ public class TencentXGModule extends ReactContextBaseJavaModule {
         return XGPushConfig.getToken(this.context);
     }
 
-    private void sendEvent(String eventName,
-                           @Nullable Object params) {
+    private void sendEvent(String eventName, @Nullable Object params) {
         this.reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);
+    }
+
+    @Override
+    public void onHostResume() {
+
+    }
+
+    @Override
+    public void onHostPause() {
+        XGPushManager.onActivityStoped(this.getCurrentActivity());
+        LocalBroadcastManager.getInstance(this.context).unregisterReceiver(this.innerReceiver);
+    }
+
+    @Override
+    public void onHostDestroy() {
+
+    }
+
+    public void sendEvent(Intent intent) {
+        Bundle payload = intent.getExtras();
+        switch (intent.getAction()) {
+            case XGMessageReceiver.MActionNotification:
+//                WritableMap params = Arguments.createMap();
+//                params.putString("Content", payload.getString());
+//                params.putString("Title", notifiShowedRlt.getTitle());
+//                params.putInt("MsgId", notifiShowedRlt.getMsgId());
+//                params.putInt("NotificationId", notifiShowedRlt.getNotifactionId());
+//                params.putInt("NActionType", notifiShowedRlt.getNotificationActionType());
+//                params.
+                Log.d(LogTag, "Got notification");
+                sendEvent(RCTRegisteredEvent, payload);
+                break;
+            case XGMessageReceiver.MActionCustomNotification:
+                Log.d(LogTag, "Got custom notification");
+                sendEvent(RCTRemoteNotificationEvent, payload);
+                break;
+            case XGMessageReceiver.MActionUnregister: {
+                int errorCode = payload.getInt("errorCode");
+                Log.d(LogTag, "Got unregister result " + errorCode);
+                if (errorCode != XGPushBaseReceiver.SUCCESS) {
+                    sendEvent(RCTFailureEvent, "Fail to set unregister caused by " + errorCode);
+                }
+                break;
+            }
+            case XGMessageReceiver.MActionRegistration: {
+                int errorCode = payload.getInt("errorCode");
+                Log.d(LogTag, "Got register result " + errorCode);
+                if (errorCode != XGPushBaseReceiver.SUCCESS) {
+                    sendEvent(RCTFailureEvent, "Fail to set register caused by " + errorCode);
+                } else {
+                    sendEvent(RCTRegisteredEvent, payload.getString("Token"));
+                }
+
+                break;
+            }
+
+            case XGMessageReceiver.MActionTagSetting: {
+                int errorCode = payload.getInt("errorCode");
+                if (errorCode != XGPushBaseReceiver.SUCCESS) {
+                    sendEvent(RCTFailureEvent, "Fail to set tag " + payload.getString("tagName") +
+                            " caused by " + errorCode);
+                }
+                break;
+            }
+
+            case XGMessageReceiver.MActionTagDeleting: {
+                int errorCode = payload.getInt("errorCode");
+                if (errorCode != XGPushBaseReceiver.SUCCESS) {
+                    sendEvent(RCTFailureEvent, "Fail to delete tag " + payload.getString("tagName") +
+                            " caused by " + errorCode);
+                }
+                break;
+            }
+
+            case XGMessageReceiver.MActionClickNotification:
+//                sendEvent(RCTRegisteredEvent, payload);
+                break;
+        }
     }
 }
