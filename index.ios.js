@@ -7,6 +7,8 @@ import {
 
 var XG = NativeModules.TencentXG;
 
+var disableIOS;
+
 function allEvents() {
   return [
     XG.LocalNotificationEvent,
@@ -17,6 +19,7 @@ function allEvents() {
 }
 
 function addEventListener(event, listener) {
+  if (disableIOS) return disableIOS;
   if (allEvents().indexOf(event) < 0) return;
   return NativeAppEventEmitter.addListener(
     event, listener
@@ -26,16 +29,29 @@ function addEventListener(event, listener) {
 module.exports = {
   addEventListener,
   allEvents,
-  enableDebug: enable => XG.enableDebug(enable || true),
-  setCredential: (accessId, accessKey) => XG.setCredential(accessId, accessKey),
-  register: (account, permissions) => XG.register(account, permissions),
-  checkPermissions: () => XG.checkPermissions(),
-  getApplicationIconBadgeNumber: () => XG.getApplicationIconBadgeNumber(),
-  presentLocalNotification: obj => XG.presentLocalNotification(obj),
-  scheduleLocalNotification: obj => XG.scheduleLocalNotification(obj),
-  cancelLocalNotifications: () => XG.cancelLocalNotifications(),
-  cancelAllLocalNotifications: () => XG.cancelAllLocalNotifications(),
-  setTag: tag => XG.setTag(tag),
-  delTag: tag => XG.delTag(tag),
-  unregister: () => XG.unRegisterDevice(),
+  disableIOS: () => disableIOS = true,
+  enableDebug: enable => disableIOS || XG.enableDebug(enable || true),
+  setCredential: (accessId, accessKey) => {
+    return disableIOS || XG.setCredential(accessId, accessKey);
+  },
+  register: (account, permissions) => {
+    return disableIOS || XG.register(account, permissions);
+  },
+  checkPermissions: () => disableIOS || XG.checkPermissions(),
+  getApplicationIconBadgeNumber: () => {
+    return disableIOS || XG.getApplicationIconBadgeNumber();
+  },
+  presentLocalNotification: obj => {
+    return disableIOS || XG.presentLocalNotification(obj);
+  },
+  scheduleLocalNotification: obj => {
+    return disableIOS || XG.scheduleLocalNotification(obj);
+  },
+  cancelLocalNotifications: () => disableIOS || XG.cancelLocalNotifications(),
+  cancelAllLocalNotifications: () => {
+    return disableIOS || XG.cancelAllLocalNotifications();
+  },
+  setTag: tag => disableIOS || XG.setTag(tag),
+  delTag: tag => disableIOS || XG.delTag(tag),
+  unregister: () => disableIOS || XG.unRegisterDevice(),
 };

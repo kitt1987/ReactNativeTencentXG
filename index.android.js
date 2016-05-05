@@ -1,28 +1,24 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
-var { NativeModules } = require('react-native');
+var {
+  NativeModules,
+  DeviceEventEmitter
+} = require('react-native');
 var XG = NativeModules.TencentXG;
 
-function enableDebug(enable) {
-  XG.enableDebug(enable);
-}
-
-function getDeviceToken() {
-  return XG.getDeviceToken();
-}
-
-function setCredential(accessId, accessKey) {
-  XG.setCredential(accessId, accessKey);
+function allEvents() {
+  return [
+    XG.LocalNotificationEvent,
+    XG.RemoteNotificationEvent,
+    XG.RegisteredEvent,
+    XG.FailureEvent
+  ];
 }
 
 function register(account, ticket, ticketType, qua) {
-  if (ticket) return XG.registerPushWithTicketThen('' + account, ticket, ticketType, qua);
-  if (account) return XG.registerPushAndBindAccountThen('' + account);
-  return XG.registerPushThen();
+  if (ticket) return XG.registerPushWithTicket('' + account, ticket, ticketType, qua);
+  if (account) return XG.registerPushAndBindAccount('' + account);
+  return XG.registerPush();
 }
 
 function sendLocalNotification(title, content, triggerTsInus) {
@@ -34,19 +30,36 @@ function sendLocalNotification(title, content, triggerTsInus) {
 }
 
 function addEventListener(event, listener) {
-  throw new Error('unimplemented');
+  if (allEvents().indexOf(event) < 0) return;
+  DeviceEventEmitter.addListener(event, listener);
 }
 
-function removeEventListener(event, listener) {
-  throw new Error('unimplemented');
-}
+function nothing() {}
 
 module.exports = {
-  enableDebug,
-  // getDeviceToken,
-  setCredential,
-  register,
-  sendLocalNotification,
   addEventListener,
-  removeEventListener
+  allEvents,
+  register,
+  disableIOS: nothing,
+  enableDebug: enable => XG.enableDebug(enable || true),
+  setCredential: (accessId, accessKey) => {
+    return XG.setCredential(accessId, accessKey);
+  },
+  checkPermissions: () => XG.checkPermissions(),
+  getApplicationIconBadgeNumber: () => {
+    return XG.getApplicationIconBadgeNumber();
+  },
+  presentLocalNotification: obj => {
+    return XG.presentLocalNotification(obj);
+  },
+  scheduleLocalNotification: obj => {
+    return XG.scheduleLocalNotification(obj);
+  },
+  cancelLocalNotifications: () => XG.cancelLocalNotifications(),
+  cancelAllLocalNotifications: () => {
+    return XG.cancelAllLocalNotifications();
+  },
+  setTag: tag => XG.setTag(tag),
+  delTag: tag => XG.delTag(tag),
+  unregister: () => XG.unRegisterDevice(),
 };

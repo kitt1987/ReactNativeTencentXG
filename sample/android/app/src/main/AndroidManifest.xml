@@ -84,7 +84,7 @@
             android:exported="true" >
             <intent-filter>
                 <!-- 【必须】 请修改为当前APP名包.PUSH_ACTION，如demo的包名为：com.qq.xgdemo -->
-                <action android:name="com.sample.PUSH_ACTION" />
+                <action android:name="com.kh.txg.sample.PUSH_ACTION" />
             </intent-filter>
         </service>
     </application>

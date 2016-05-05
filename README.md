@@ -124,7 +124,6 @@ XG.sendLocalNotification('title', 'content', Date.now() + 5000);
 ```
 
 # TODO
-- [x] For iOS
 - [ ] Push Receiver for Android
-- [x] Complete API documentation
-- [x] Sample project
+- [ ] update to the newest SDK
+- [ ] new API documentation

@@ -7,6 +7,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com:kitt1987/ReactNativeTencentXG.git"
   },
+  "jshintConfig": {
+    "node": true,
+    "esnext": true
+  },
   "peerDependencies": {
     "react-native": ">=0.20"
   },
