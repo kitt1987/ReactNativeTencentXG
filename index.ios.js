@@ -26,9 +26,19 @@ function addEventListener(event, listener) {
   );
 }
 
+function scheduleLocalNotification(obj) {
+  if (disableIOS) return;
+  if (obj.fireDate) {
+    XG.scheduleLocalNotification(obj);
+  } else {
+    XG.presentLocalNotification(obj);
+  }
+}
+
 module.exports = {
   addEventListener,
   allEvents,
+  scheduleLocalNotification,
   disableIOS: () => disableIOS = true,
   enableDebug: enable => disableIOS || XG.enableDebug(enable || true),
   setCredential: (accessId, accessKey) => {
@@ -41,11 +51,8 @@ module.exports = {
   getApplicationIconBadgeNumber: () => {
     return disableIOS || XG.getApplicationIconBadgeNumber();
   },
-  presentLocalNotification: obj => {
-    return disableIOS || XG.presentLocalNotification(obj);
-  },
-  scheduleLocalNotification: obj => {
-    return disableIOS || XG.scheduleLocalNotification(obj);
+  setApplicationIconBadgeNumber: number => {
+    return XG.setApplicationIconBadgeNumber(number);
   },
   cancelLocalNotifications: () => disableIOS || XG.cancelLocalNotifications(),
   cancelAllLocalNotifications: () => {

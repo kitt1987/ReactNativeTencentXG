@@ -21,12 +21,14 @@ function register(account, ticket, ticketType, qua) {
   return XG.registerPush();
 }
 
-function sendLocalNotification(title, content, triggerTsInus) {
-  var date = new Date(triggerTsInus);
-  var dateString = '' + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+function scheduleLocalNotification(obj) {
+  var date = new Date(obj.fireDate || Date.now());
+  var dateString = '' + date.getFullYear() + (date.getMonth() + 1) +
+    date.getDate();
   var hourString = '' + date.getHours();
   var minuteString = '' + date.getMinutes();
-  XG.addLocalNotification(title, content, dateString, hourString, minuteString);
+  XG.addLocalNotification(obj.title, obj.alertBody, dateString, hourString,
+    minuteString);
 }
 
 function addEventListener(event, listener) {
@@ -40,26 +42,22 @@ module.exports = {
   addEventListener,
   allEvents,
   register,
+  scheduleLocalNotification,
   disableIOS: nothing,
   enableDebug: enable => XG.enableDebug(enable || true),
   setCredential: (accessId, accessKey) => {
     return XG.setCredential(accessId, accessKey);
   },
-  checkPermissions: () => XG.checkPermissions(),
-  getApplicationIconBadgeNumber: () => {
-    return XG.getApplicationIconBadgeNumber();
-  },
-  presentLocalNotification: obj => {
-    return XG.presentLocalNotification(obj);
-  },
-  scheduleLocalNotification: obj => {
-    return XG.scheduleLocalNotification(obj);
-  },
-  cancelLocalNotifications: () => XG.cancelLocalNotifications(),
-  cancelAllLocalNotifications: () => {
-    return XG.cancelAllLocalNotifications();
-  },
+  checkPermissions: () => Promise.resolve({
+    alert: true,
+    badge: false,
+    sound: true
+  }),
+  getApplicationIconBadgeNumber: () => Promise.resolve(0),
+  setApplicationIconBadgeNumber: nothing,
+  cancelLocalNotifications: nothing,
+  cancelAllLocalNotifications: nothing,
   setTag: tag => XG.setTag(tag),
   delTag: tag => XG.delTag(tag),
-  unregister: () => XG.unRegisterDevice(),
+  unregister: () => XG.unregisterPush(),
 };

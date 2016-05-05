@@ -23,7 +23,7 @@ class sample extends Component {
     XG.enableDebug(true);
     console.log(XG.allEvents());
     var registerHolder = XG.addEventListener('register', devToken => {
-      console.log(devToken);
+      console.log('Got devToken:' + devToken);
       this.setState({devToken});
     });
 

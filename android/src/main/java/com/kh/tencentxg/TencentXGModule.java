@@ -202,7 +202,7 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 //                params.putInt("NActionType", notifiShowedRlt.getNotificationActionType());
 //                params.
                 Log.d(LogTag, "Got notification");
-                sendEvent(RCTRegisteredEvent, payload);
+                sendEvent(RCTRemoteNotificationEvent, payload);
                 break;
             case XGMessageReceiver.MActionCustomNotification:
                 Log.d(LogTag, "Got custom notification");
@@ -219,11 +219,11 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
             case XGMessageReceiver.MActionRegistration: {
                 int errorCode = payload.getInt("errorCode");
                 Log.d(LogTag, "Got register result " + errorCode);
-                if (errorCode != XGPushBaseReceiver.SUCCESS) {
-                    sendEvent(RCTFailureEvent, "Fail to set register caused by " + errorCode);
-                } else {
-                    sendEvent(RCTRegisteredEvent, payload.getString("Token"));
-                }
+//                if (errorCode != XGPushBaseReceiver.SUCCESS) {
+//                    sendEvent(RCTFailureEvent, "Fail to set register caused by " + errorCode);
+//                } else {
+//                    sendEvent(RCTRegisteredEvent, payload.getString("Token"));
+//                }
 
                 break;
             }
