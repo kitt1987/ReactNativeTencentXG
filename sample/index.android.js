@@ -16,6 +16,8 @@ import * as XG from 'react-native-tencent-xg';
 
 class sample extends Component {
   state = {
+    event: '',
+    eventArgs: null,
     devToken: 'waiting for registration',
   };
 
@@ -23,28 +25,26 @@ class sample extends Component {
     XG.enableDebug(true);
     console.log(XG.allEvents());
     var registerHolder = XG.addEventListener('register', devToken => {
-      console.log('Got devToken:' + devToken);
-      this.setState({devToken});
+      this.setState({event: 'register', eventArgs: devToken});
     });
 
     if (!registerHolder) console.log('Fail to add event to handle register');
 
     var errorHolder = XG.addEventListener('error', err => {
-      console.log('Error issued');
-      console.log(err);
+      this.setState({event: 'error', eventArgs: err});
     });
 
     if (!errorHolder) console.log('Fail to add event to handle error');
 
     var remoteHolder = XG.addEventListener('notification', xgInstance => {
-      console.log(xgInstance);
+      this.setState({event: 'notification', eventArgs: xgInstance});
     });
 
     if (!remoteHolder)
       console.log('Fail to add event to handle remote notification');
 
     var localHolder = XG.addEventListener('localNotification', xgInstance => {
-      console.log(xgInstance);
+      this.setState({event: 'localNotification', eventArgs: xgInstance});
     });
 
     if (!localHolder) console.log('Fail to add event to local notification');

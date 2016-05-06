@@ -53,7 +53,9 @@ module.exports = {
   setApplicationIconBadgeNumber: number => {
     return XG.setApplicationIconBadgeNumber(number);
   },
-  cancelLocalNotifications: () => disableIOS || XG.cancelLocalNotifications(),
+  cancelLocalNotifications: userInfo => {
+    return disableIOS || XG.cancelLocalNotifications(userInfo);
+  },
   cancelAllLocalNotifications: () => {
     return disableIOS || XG.cancelAllLocalNotifications();
   },

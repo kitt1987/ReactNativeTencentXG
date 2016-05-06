@@ -115,7 +115,6 @@ RCT_EXPORT_METHOD(presentLocalNotification:(UILocalNotification *)notification)
 
 RCT_EXPORT_METHOD(scheduleLocalNotification:(UILocalNotification *)notification)
 {
-    NSLog(@"[XGPush] scheduleLocalNotification");
     [RCTSharedApplication() scheduleLocalNotification:notification];
 }
 
@@ -217,7 +216,7 @@ RCT_EXPORT_METHOD(setApplicationIconBadgeNumber:(NSInteger)number)
 RCT_REMAP_METHOD(getApplicationIconBadgeNumber, resolver2:(RCTPromiseResolveBlock)resolve
                  rejecter2:(RCTPromiseRejectBlock)reject)
 {
-    resolve(@[@(RCTSharedApplication().applicationIconBadgeNumber)]);
+    resolve(@(RCTSharedApplication().applicationIconBadgeNumber));
 }
 
 RCT_EXPORT_METHOD(setTag:(NSString *)tag)
