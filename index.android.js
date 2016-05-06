@@ -6,6 +6,8 @@ var {
 } = require('react-native');
 var XG = NativeModules.TencentXG;
 
+function nothing() {}
+
 function allEvents() {
   return [
     XG.LocalNotificationEvent,
@@ -16,6 +18,7 @@ function allEvents() {
 }
 
 function register(account, ticket, ticketType, qua) {
+  if (typeof ticket !== 'string') ticket = null;
   if (ticket) return XG.registerPushWithTicket('' + account, ticket, ticketType, qua);
   if (account) return XG.registerPushAndBindAccount('' + account);
   return XG.registerPush();
@@ -27,16 +30,22 @@ function scheduleLocalNotification(obj) {
     date.getDate();
   var hourString = '' + date.getHours();
   var minuteString = '' + date.getMinutes();
+  console.log(dateString + ':' + hourString + ':' + minuteString);
   XG.addLocalNotification(obj.title, obj.alertBody, dateString, hourString,
     minuteString);
 }
 
 function addEventListener(event, listener) {
   if (allEvents().indexOf(event) < 0) return;
+  if (event === XG.LocalNotificationEvent) {
+    console.warn(XG.LocalNotificationEvent + ' is not supported on Android');
+    return {
+      remove: nothing
+    };
+  }
+
   return DeviceEventEmitter.addListener(event, listener);
 }
-
-function nothing() {}
 
 module.exports = {
   addEventListener,

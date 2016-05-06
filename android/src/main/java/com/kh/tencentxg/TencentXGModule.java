@@ -1,6 +1,5 @@
 package com.kh.tencentxg;
 
-import java.lang.Exception;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,14 +12,12 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.content.IntentFilter;
 
-import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-//import com.facebook.react.bridge.Promise;
 
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
@@ -29,10 +26,6 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGLocalMessage;
 import com.tencent.android.tpush.XGPushBaseReceiver;
-import com.tencent.android.tpush.XGPushTextMessage;
-import com.tencent.android.tpush.XGPushShowedResult;
-import com.tencent.android.tpush.XGPushClickedResult;
-import com.tencent.android.tpush.XGPushRegisterResult;
 
 public class TencentXGModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
@@ -191,26 +184,26 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
     }
 
     public void sendEvent(Intent intent) {
-        Bundle payload = intent.getExtras();
+        Bundle payload = intent.getExtras().getBundle("data");
         switch (intent.getAction()) {
             case XGMessageReceiver.MActionNotification:
-//                WritableMap params = Arguments.createMap();
-//                params.putString("Content", payload.getString());
-//                params.putString("Title", notifiShowedRlt.getTitle());
-//                params.putInt("MsgId", notifiShowedRlt.getMsgId());
-//                params.putInt("NotificationId", notifiShowedRlt.getNotifactionId());
-//                params.putInt("NActionType", notifiShowedRlt.getNotificationActionType());
-//                params.
-                Log.d(LogTag, "Got notification");
-                sendEvent(RCTRemoteNotificationEvent, payload);
+                WritableMap params = Arguments.createMap();
+                params.putString("Content", payload.getString("Content"));
+                params.putString("Title", payload.getString("Title"));
+                params.putInt("MsgId", (int)payload.getLong("MsgId"));
+                params.putInt("NotificationId", (int)payload.getLong("NotificationId"));
+                params.putInt("NActionType", (int)payload.getLong("NActionType"));
+
+                Log.d(LogTag, "Got notification " + payload.toString());
+                sendEvent(RCTRemoteNotificationEvent, params);
                 break;
             case XGMessageReceiver.MActionCustomNotification:
-                Log.d(LogTag, "Got custom notification");
+                Log.d(LogTag, "Got custom notification " + payload.toString());
                 sendEvent(RCTRemoteNotificationEvent, payload);
                 break;
             case XGMessageReceiver.MActionUnregister: {
                 int errorCode = payload.getInt("errorCode");
-                Log.d(LogTag, "Got unregister result " + errorCode);
+                Log.d(LogTag, "Got unregister result " + payload.toString());
                 if (errorCode != XGPushBaseReceiver.SUCCESS) {
                     sendEvent(RCTFailureEvent, "Fail to set unregister caused by " + errorCode);
                 }
@@ -218,7 +211,7 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
             }
             case XGMessageReceiver.MActionRegistration: {
                 int errorCode = payload.getInt("errorCode");
-                Log.d(LogTag, "Got register result " + errorCode);
+                Log.d(LogTag, "Got register result " + payload.toString());
 //                if (errorCode != XGPushBaseReceiver.SUCCESS) {
 //                    sendEvent(RCTFailureEvent, "Fail to set register caused by " + errorCode);
 //                } else {
@@ -229,6 +222,7 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
             }
 
             case XGMessageReceiver.MActionTagSetting: {
+                Log.d(LogTag, "Got tag setting result " + payload.toString());
                 int errorCode = payload.getInt("errorCode");
                 if (errorCode != XGPushBaseReceiver.SUCCESS) {
                     sendEvent(RCTFailureEvent, "Fail to set tag " + payload.getString("tagName") +
@@ -238,6 +232,7 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
             }
 
             case XGMessageReceiver.MActionTagDeleting: {
+                Log.d(LogTag, "Got tag deleting result " + payload.toString());
                 int errorCode = payload.getInt("errorCode");
                 if (errorCode != XGPushBaseReceiver.SUCCESS) {
                     sendEvent(RCTFailureEvent, "Fail to delete tag " + payload.getString("tagName") +
@@ -247,6 +242,7 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
             }
 
             case XGMessageReceiver.MActionClickNotification:
+                Log.d(LogTag, "Got notification clicking result " + payload.toString());
 //                sendEvent(RCTRegisteredEvent, payload);
                 break;
         }

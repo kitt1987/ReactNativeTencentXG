@@ -77,13 +77,13 @@ class sample extends Component {
           onPress={
             () => {
               XG.scheduleLocalNotification({
-                fireDate: Date.now() + 5000,
+                fireDate: Date.now() + 60000,
                 alertBody: 'content',
               });
               BackAndroid.exitApp();
             }
           }>
-          Press to send a local notification after 5s
+          Press to send a local notification after 1min
         </Text>
       </View>
     );
