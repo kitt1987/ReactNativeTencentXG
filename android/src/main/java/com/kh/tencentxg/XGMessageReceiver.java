@@ -14,13 +14,13 @@ import com.tencent.android.tpush.XGPushTextMessage;
 
 public class XGMessageReceiver extends XGPushBaseReceiver {
 
-    public static final String MActionNotification = "XG-Notification";
-    public static final String MActionCustomNotification = "XG-CustomNotification";
-    public static final String MActionUnregister = "XG-Unregister";
-    public static final String MActionRegistration = "XG-Registration";
-    public static final String MActionTagSetting = "XG-TagSetting";
-    public static final String MActionTagDeleting = "XG-TagDeleting";
-    public static final String MActionClickNotification = "XG-ClickNotification";
+    public static final String MActionNotification = "com.kh.tencentxg.XG-Notification";
+    public static final String MActionCustomNotification = "com.kh.tencentxg.XG-CustomNotification";
+    public static final String MActionUnregister = "com.kh.tencentxg.XG-Unregister";
+    public static final String MActionRegistration = "com.kh.tencentxg.XG-Registration";
+    public static final String MActionTagSetting = "com.kh.tencentxg.XG-TagSetting";
+    public static final String MActionTagDeleting = "com.kh.tencentxg.XG-TagDeleting";
+    public static final String MActionClickNotification = "com.kh.tencentxg.XG-ClickNotification";
 
     private static final String LogTag = "[TXG]XG Receiver";
 
@@ -30,6 +30,8 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
 			XGPushShowedResult notifiShowedRlt) {
 		if (context == null || notifiShowedRlt == null) return;
 
+        Log.d(LogTag, "Got notification " + notifiShowedRlt.toString());
+
         Bundle payload = new Bundle();
         payload.putString("Content", notifiShowedRlt.getContent());
         payload.putString("Title", notifiShowedRlt.getTitle());
@@ -38,12 +40,16 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
         payload.putLong("NActionType", notifiShowedRlt.getNotificationActionType());
 
         Intent intent = new Intent(MActionNotification);
+        intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         intent.putExtra("data", payload);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
+        if (context == null || message == null) return;
+        Log.d(LogTag, "Got text notification " + message.toString());
+
         Bundle payload = new Bundle();
         payload.putString("Title", message.getTitle());
         payload.putString("Content", message.getContent());
@@ -57,6 +63,9 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onRegisterResult(Context context, int errorCode,
                                  XGPushRegisterResult message) {
+        if (context == null || message == null) return;
+        Log.d(LogTag, "Got register result " + message.toString());
+
         Bundle payload = new Bundle();
         payload.putInt("errorCode", errorCode);
         payload.putLong("AccessId", message.getAccessId());
@@ -73,6 +82,9 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
 
 	@Override
 	public void onUnregisterResult(Context context, int errorCode) {
+        if (context == null) return;
+        Log.d(LogTag, "Got unregister result " + errorCode);
+
         Bundle payload = new Bundle();
         payload.putInt("errorCode", errorCode);
 
@@ -83,6 +95,9 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
 
 	@Override
 	public void onSetTagResult(Context context, int errorCode, String tagName) {
+        if (context == null) return;
+        Log.d(LogTag, "Got setting tag result " + errorCode);
+
         Bundle payload = new Bundle();
         payload.putInt("errorCode", errorCode);
         payload.putString("tagName", tagName);
@@ -94,6 +109,9 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
 
 	@Override
 	public void onDeleteTagResult(Context context, int errorCode, String tagName) {
+        if (context == null) return;
+        Log.d(LogTag, "Got deleting tag result " + errorCode);
+
         Bundle payload = new Bundle();
         payload.putInt("errorCode", errorCode);
         payload.putString("tagName", tagName);
@@ -106,6 +124,9 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
 	@Override
 	public void onNotifactionClickedResult(Context context,
 			XGPushClickedResult message) {
+        if (context == null || message == null) return;
+        Log.d(LogTag, "Got message click " + message.toString());
+
         Bundle payload = new Bundle();
         payload.putString("Content", message.getContent());
         payload.putString("Title", message.getTitle());
@@ -113,9 +134,9 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
         payload.putString("CustomContent", message.getCustomContent());
         payload.putLong("NActionType", message.getNotificationActionType());
         payload.putLong("ActionType", message.getActionType());
-        payload.putString("ActionType", message.getActivityName());
+        payload.putString("ActivityName", message.getActivityName());
 
-        Intent intent = new Intent(MActionUnregister);
+        Intent intent = new Intent(MActionClickNotification);
         intent.putExtra("data", payload);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}

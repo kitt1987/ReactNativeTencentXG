@@ -32,7 +32,8 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
     private Context context;
     private ReactApplicationContext reactContext;
     private BroadcastReceiver innerReceiver;
-    private static final String LogTag = "TencentXG";
+    private IntentFilter innerFilter;
+    private static final String LogTag = "[TXG]RNModule";
     private static final String RCTLocalNotificationEvent = "localNotification";
     private static final String RCTRemoteNotificationEvent = "notification";
     private static final String RCTRegisteredEvent = "register";
@@ -44,15 +45,16 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
         this.context = reactContext.getApplicationContext();
         innerReceiver = new InnerMessageReceiver(this);
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(XGMessageReceiver.MActionNotification);
-        filter.addAction(XGMessageReceiver.MActionCustomNotification);
-        filter.addAction(XGMessageReceiver.MActionUnregister);
-        filter.addAction(XGMessageReceiver.MActionRegistration);
-        filter.addAction(XGMessageReceiver.MActionTagSetting);
-        filter.addAction(XGMessageReceiver.MActionTagDeleting);
-        filter.addAction(XGMessageReceiver.MActionClickNotification);
-        LocalBroadcastManager.getInstance(this.context).registerReceiver(this.innerReceiver, filter);
+        innerFilter = new IntentFilter();
+        innerFilter.addAction(XGMessageReceiver.MActionNotification);
+        innerFilter.addAction(XGMessageReceiver.MActionCustomNotification);
+        innerFilter.addAction(XGMessageReceiver.MActionUnregister);
+        innerFilter.addAction(XGMessageReceiver.MActionRegistration);
+        innerFilter.addAction(XGMessageReceiver.MActionTagSetting);
+        innerFilter.addAction(XGMessageReceiver.MActionTagDeleting);
+        innerFilter.addAction(XGMessageReceiver.MActionClickNotification);
+        LocalBroadcastManager.getInstance(this.context).registerReceiver(this.innerReceiver,
+                this.innerFilter);
         reactContext.addLifecycleEventListener(this);
     }
 
@@ -169,18 +171,16 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
     @Override
     public void onHostResume() {
-
     }
 
     @Override
     public void onHostPause() {
-        XGPushManager.onActivityStoped(this.getCurrentActivity());
-        LocalBroadcastManager.getInstance(this.context).unregisterReceiver(this.innerReceiver);
     }
 
     @Override
     public void onHostDestroy() {
-
+        Log.d(LogTag, "Unregister inner message receiver");
+        LocalBroadcastManager.getInstance(this.context).unregisterReceiver(this.innerReceiver);
     }
 
     public void sendEvent(Intent intent) {

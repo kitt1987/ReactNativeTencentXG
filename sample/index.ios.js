@@ -80,7 +80,6 @@ class sample extends Component {
                 fireDate: Date.now() + 5000,
                 alertBody: 'content',
               });
-              BackAndroid.exitApp();
             }
           }>
           Press to send a local notification after 5s

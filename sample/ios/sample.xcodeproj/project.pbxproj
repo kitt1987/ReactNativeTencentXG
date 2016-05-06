@@ -22,10 +22,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		EA1AB5901CD9AA960011EDAA /* libReactNativeTencentXG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA1AB58E1CD9AA560011EDAA /* libReactNativeTencentXG.a */; };
 		EA1AB5A91CD9ACDC0011EDAA /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EA1AB5A81CD9ACDC0011EDAA /* libsqlite3.tbd */; };
 		EA1AB5AB1CD9ACFB0011EDAA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA1AB5AA1CD9ACFB0011EDAA /* CoreTelephony.framework */; };
 		EA1AB5B51CD9B5A70011EDAA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EA1AB5B41CD9B5A70011EDAA /* libz.tbd */; };
+		EAB294BC1CDC71AB00965C95 /* libReactNativeTencentXG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAB294BB1CDC719600965C95 /* libReactNativeTencentXG.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,9 +106,9 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		EA1AB58D1CD9AA560011EDAA /* PBXContainerItemProxy */ = {
+		EAB294BA1CDC719600965C95 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = EA1AB5891CD9AA560011EDAA /* ReactNativeTencentXG.xcodeproj */;
+			containerPortal = EAB294B61CDC719600965C95 /* ReactNativeTencentXG.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = EAB2B2091C7FE3FD00D6D4F3;
 			remoteInfo = ReactNativeTencentXG;
@@ -137,13 +137,13 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		EA1AB5891CD9AA560011EDAA /* ReactNativeTencentXG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeTencentXG.xcodeproj; path = "../node_modules/react-native-tencent-xg/ios/ReactNativeTencentXG.xcodeproj"; sourceTree = "<group>"; };
 		EA1AB5A81CD9ACDC0011EDAA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		EA1AB5AA1CD9ACFB0011EDAA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		EA1AB5AC1CD9AD0D0011EDAA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		EA1AB5AE1CD9AD220011EDAA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EA1AB5B01CD9AD380011EDAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EA1AB5B41CD9B5A70011EDAA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		EAB294B61CDC719600965C95 /* ReactNativeTencentXG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeTencentXG.xcodeproj; path = "../node_modules/react-native-tencent-xg/ios/ReactNativeTencentXG.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,10 +158,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAB294BC1CDC71AB00965C95 /* libReactNativeTencentXG.a in Frameworks */,
 				EA1AB5B51CD9B5A70011EDAA /* libz.tbd in Frameworks */,
 				EA1AB5AB1CD9ACFB0011EDAA /* CoreTelephony.framework in Frameworks */,
 				EA1AB5A91CD9ACDC0011EDAA /* libsqlite3.tbd in Frameworks */,
-				EA1AB5901CD9AA960011EDAA /* libReactNativeTencentXG.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -284,7 +284,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				EA1AB5891CD9AA560011EDAA /* ReactNativeTencentXG.xcodeproj */,
+				EAB294B61CDC719600965C95 /* ReactNativeTencentXG.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -334,10 +334,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EA1AB58A1CD9AA560011EDAA /* Products */ = {
+		EAB294B71CDC719600965C95 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EA1AB58E1CD9AA560011EDAA /* libReactNativeTencentXG.a */,
+				EAB294BB1CDC719600965C95 /* libReactNativeTencentXG.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -453,8 +453,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = EA1AB58A1CD9AA560011EDAA /* Products */;
-					ProjectRef = EA1AB5891CD9AA560011EDAA /* ReactNativeTencentXG.xcodeproj */;
+					ProductGroup = EAB294B71CDC719600965C95 /* Products */;
+					ProjectRef = EAB294B61CDC719600965C95 /* ReactNativeTencentXG.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -536,11 +536,11 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		EA1AB58E1CD9AA560011EDAA /* libReactNativeTencentXG.a */ = {
+		EAB294BB1CDC719600965C95 /* libReactNativeTencentXG.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libReactNativeTencentXG.a;
-			remoteRef = EA1AB58D1CD9AA560011EDAA /* PBXContainerItemProxy */;
+			remoteRef = EAB294BA1CDC719600965C95 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

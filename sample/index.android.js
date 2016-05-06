@@ -76,11 +76,11 @@ class sample extends Component {
         <Text style={styles.instructions}
           onPress={
             () => {
+              var fireDate = Date.now() + 60000;
               XG.scheduleLocalNotification({
-                fireDate: Date.now() + 60000,
-                alertBody: 'content',
+                fireDate,
+                alertBody: 'content of ' + fireDate,
               });
-              BackAndroid.exitApp();
             }
           }>
           Press to send a local notification after 1min

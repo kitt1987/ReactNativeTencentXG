@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 
 var XG = NativeModules.TencentXG;
-
 var disableIOS;
 
 function allEvents() {
