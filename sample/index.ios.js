@@ -13,13 +13,15 @@ import React, {
 } from 'react-native';
 
 import * as XG from 'react-native-tencent-xg';
+import * as Remote from './remote';
 
 class sample extends Component {
   state = {
     event: '',
     eventArgs: null,
     badgeNum: 0,
-    localUserInfo: {id: 1}
+    localUserInfo: {id: 1},
+    devToken: '',
   };
 
   componentDidMount() {
@@ -28,7 +30,8 @@ class sample extends Component {
     var registerHolder = XG.addEventListener('register', devToken => {
       this.setState({
         event: 'register',
-        eventArgs: JSON.stringify(devToken)
+        eventArgs: JSON.stringify(devToken),
+        devToken,
       });
     });
 
@@ -148,7 +151,24 @@ class sample extends Component {
             Clear
           </Text>
         </View>
-      </View>
+        <View style={styles.row}>
+          <Text style={styles.instructions}>Remote Notification</Text>
+          <Text style={[styles.instructions, styles.button]}
+            onPress={() => {
+              Remote.push(this.state.devToken, 'Send a remote testing message',
+                'Testing');
+            }}>
+            Request
+          </Text>
+          <Text style={[styles.instructions, styles.button]}
+            onPress={() => {
+              Remote.broadcast('Send a remote testing broadcast', 'Testing');
+            }}
+          >
+            Broadcast
+          </Text>
+        </View>
+    </View>
     );
   }
 }
