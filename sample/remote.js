@@ -19,7 +19,7 @@ function calcSignature(method, url, params, secretKey) {
 
 function buildGeneralParams(devToken) {
   var params = {
-    access_id: Platform.OS === 'ios' ? 2200197326 : 2100182505,
+    access_id: Platform.OS === 'ios' ? 2200197326 : 2100197325,
     timestamp: Math.ceil(Date.now() / 1000),
   };
 

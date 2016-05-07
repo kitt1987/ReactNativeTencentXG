@@ -76,12 +76,10 @@ class sample extends Component {
     });
 
     // Your accessId as number and your accessKey
-    XG.setCredential(2100197325, 'A253BZM7P9NF');
+    XG.setCredential(2200197326, 'I2A3YPU353TN');
     XG.register('SampleTester');
     XG.getApplicationIconBadgeNumber()
       .then(badgeNum => {
-        console.log(badgeNum);
-        console.log(typeof badgeNum);
         this.setState({badgeNum});
       })
   }
