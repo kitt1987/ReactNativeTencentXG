@@ -125,13 +125,14 @@ class sample extends Component {
           <Text style={styles.instructions}>Local Notification</Text>
           <Text style={[styles.instructions, styles.button]}
             onPress={() => {
-              var fireDate = Date.now() + 5000;
+              var fireDate = Date.now() + 60000;
               XG.scheduleLocalNotification({
                 fireDate,
                 alertBody: 'content of ' + fireDate,
                 userInfo: this.state.localUserInfo
               });
-            }}>
+            }}
+          >
             Send
           </Text>
           <Text style={[styles.instructions, styles.button]}

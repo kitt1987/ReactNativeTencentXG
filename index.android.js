@@ -31,7 +31,11 @@ function scheduleLocalNotification(obj) {
   var hourString = '' + date.getHours();
   var minuteString = '' + date.getMinutes();
   XG.addLocalNotification(obj.title, obj.alertBody, dateString, hourString,
-    minuteString);
+      minuteString)
+    .then(notificationID => {
+      if (!obj.userInfo || obj.userInfo.notificationID) return;
+      obj.userInfo.notificationID = notificationID;
+    });
 }
 
 function addEventListener(event, listener) {
@@ -63,8 +67,12 @@ module.exports = {
   }),
   getApplicationIconBadgeNumber: () => Promise.resolve(0),
   setApplicationIconBadgeNumber: nothing,
-  cancelLocalNotifications: nothing,
-  cancelAllLocalNotifications: nothing,
+  cancelLocalNotifications: userInfo => {
+    if (!userInfo || !userInfo.notificationID) return;
+    XG.cancelLocalNotifications(userInfo.notificationID);
+    userInfo.notificationID = null;
+  },
+  cancelAllLocalNotifications: () => XG.cancelAllLocalNotifications(),
   setTag: tag => XG.setTag(tag),
   delTag: tag => XG.delTag(tag),
   unregister: () => XG.unregisterPush(),

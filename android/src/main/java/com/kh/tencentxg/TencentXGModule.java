@@ -3,6 +3,7 @@ package com.kh.tencentxg;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.content.IntentFilter;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -134,7 +136,8 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
     }
 
     @ReactMethod
-    public void addLocalNotification(String title, String content, String date, String hour, String minute) {
+    public void addLocalNotification(String title, String content, String date, String hour,
+                                     String minute, Promise promise) {
         XGLocalMessage local_msg = new XGLocalMessage();
         local_msg.setType(1);
         local_msg.setTitle(title);
@@ -142,7 +145,22 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
         local_msg.setDate(date);
         local_msg.setHour(hour);
         local_msg.setMin(minute);
-        XGPushManager.addLocalNotification(this.context, local_msg);
+        long notificationID = XGPushManager.addLocalNotification(this.context, local_msg);
+        promise.resolve(notificationID);
+    }
+
+    @ReactMethod
+    public void cancelLocalNotifications(Integer notificationID) {
+        NotificationManager notificationManager =
+                (NotificationManager) this.reactContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(notificationID);
+    }
+
+    @ReactMethod
+    public void cancelAllLocalNotifications() {
+        NotificationManager notificationManager =
+                (NotificationManager) this.reactContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
     }
 
     // XGPushConfig
