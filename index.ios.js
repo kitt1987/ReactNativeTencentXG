@@ -17,11 +17,26 @@ function allEvents() {
   ];
 }
 
+function eventHandle(event, listener, dataBack) {
+  var data = dataBack;
+  if (event === XG.RemoteNotificationEvent) {
+    data = {};
+    if (dataBack.aps) {
+      data.alertBody = dataBack.aps.alert;
+      data.badge = dataBack.aps.badge;
+      Object.keys(dataBack).filter(k => k !== 'aps')
+        .forEach(k => data[k] = dataBack[k]);
+    }
+  }
+
+  listener(data);
+}
+
 function addEventListener(event, listener) {
   if (disableIOS) return disableIOS;
   if (allEvents().indexOf(event) < 0) return;
   return NativeAppEventEmitter.addListener(
-    event, listener
+    event, eventHandle.bind(null, event, listener)
   );
 }
 

@@ -17,7 +17,6 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 
@@ -146,7 +145,7 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
         local_msg.setHour(hour);
         local_msg.setMin(minute);
         long notificationID = XGPushManager.addLocalNotification(this.context, local_msg);
-        promise.resolve(notificationID);
+        promise.resolve((int)notificationID);
     }
 
     @ReactMethod
@@ -203,21 +202,31 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
     public void sendEvent(Intent intent) {
         Bundle payload = intent.getExtras().getBundle("data");
+        WritableMap params;
         switch (intent.getAction()) {
             case XGMessageReceiver.MActionNotification:
-                WritableMap params = Arguments.createMap();
+                params = Arguments.createMap();
                 params.putString("Content", payload.getString("Content"));
                 params.putString("Title", payload.getString("Title"));
                 params.putInt("MsgId", (int)payload.getLong("MsgId"));
                 params.putInt("NotificationId", (int)payload.getLong("NotificationId"));
                 params.putInt("NActionType", (int)payload.getLong("NActionType"));
+                params.putString("CustomContent", payload.getString("CustomContent"));
 
                 Log.d(LogTag, "Got notification " + payload.toString());
                 sendEvent(RCTRemoteNotificationEvent, params);
                 break;
             case XGMessageReceiver.MActionCustomNotification:
+                params = Arguments.createMap();
+                params.putString("Content", payload.getString("Content"));
+                params.putString("Title", payload.getString("Title"));
+                params.putInt("MsgId", (int)payload.getLong("MsgId"));
+                params.putInt("NotificationId", (int)payload.getLong("NotificationId"));
+                params.putInt("NActionType", (int)payload.getLong("NActionType"));
+                params.putString("CustomContent", payload.getString("CustomContent"));
+
                 Log.d(LogTag, "Got custom notification " + payload.toString());
-                sendEvent(RCTRemoteNotificationEvent, payload);
+                sendEvent(RCTRemoteNotificationEvent, params);
                 break;
             case XGMessageReceiver.MActionUnregister: {
                 int errorCode = payload.getInt("errorCode");

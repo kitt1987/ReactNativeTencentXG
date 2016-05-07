@@ -33,9 +33,22 @@ function scheduleLocalNotification(obj) {
   XG.addLocalNotification(obj.title, obj.alertBody, dateString, hourString,
       minuteString)
     .then(notificationID => {
-      if (!obj.userInfo || obj.userInfo.notificationID) return;
+      obj.userInfo = obj.userInfo || {};
       obj.userInfo.notificationID = notificationID;
     });
+}
+
+function eventHandle(event, listener, dataBack) {
+  var data = dataBack;
+  if (event === XG.RemoteNotificationEvent) {
+    data = {};
+    data.alertBody = dataBack.Content;
+    data.title = dataBack.Title;
+    if (dataBack.CustomContent)
+      Object.assign(data, JSON.parse(dataBack.CustomContent));
+  }
+
+  listener(data);
 }
 
 function addEventListener(event, listener) {
@@ -47,7 +60,8 @@ function addEventListener(event, listener) {
     };
   }
 
-  return DeviceEventEmitter.addListener(event, listener);
+  return DeviceEventEmitter.addListener(event,
+    eventHandle.bind(null, event, listener));
 }
 
 module.exports = {

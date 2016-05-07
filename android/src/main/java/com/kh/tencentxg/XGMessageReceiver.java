@@ -38,6 +38,7 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
         payload.putLong("MsgId", notifiShowedRlt.getMsgId());
         payload.putLong("NotificationId", notifiShowedRlt.getNotifactionId());
         payload.putLong("NActionType", notifiShowedRlt.getNotificationActionType());
+        payload.putString("CustomContent", notifiShowedRlt.getCustomContent());
 
         Intent intent = new Intent(MActionNotification);
         intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
