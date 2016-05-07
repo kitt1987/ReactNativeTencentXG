@@ -10,7 +10,6 @@ var disableIOS;
 
 function allEvents() {
   return [
-    XG.LocalNotificationEvent,
     XG.RemoteNotificationEvent,
     XG.RegisteredEvent,
     XG.FailureEvent
@@ -20,8 +19,8 @@ function allEvents() {
 function eventHandle(event, listener, dataBack) {
   var data = dataBack;
   if (event === XG.RemoteNotificationEvent) {
-    data = {};
     if (dataBack.aps) {
+      data = {};
       data.alertBody = dataBack.aps.alert;
       data.badge = dataBack.aps.badge;
       Object.keys(dataBack).filter(k => k !== 'aps')

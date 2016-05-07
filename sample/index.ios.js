@@ -4,6 +4,7 @@
  */
 
 import React, {
+  Alert,
   AppRegistry,
   Component,
   BackAndroid,
@@ -131,12 +132,15 @@ class sample extends Component {
                 alertBody: 'content of ' + fireDate,
                 userInfo: this.state.localUserInfo
               });
+              Alert.alert(`The notification will trigger after 5s. You have to
+                go back to desktop`);
             }}>
             Send
           </Text>
           <Text style={[styles.instructions, styles.button]}
             onPress={() => {
               XG.cancelLocalNotifications(this.state.localUserInfo);
+              Alert.alert(`Cancelled a notification`);
             }}
           >
             Cancel
@@ -144,6 +148,7 @@ class sample extends Component {
           <Text style={[styles.instructions, styles.button]}
             onPress={() => {
               XG.cancelAllLocalNotifications();
+              Alert.alert(`Cancelled all notifications`);
             }}
           >
             Clear
@@ -155,12 +160,16 @@ class sample extends Component {
             onPress={() => {
               Remote.push(this.state.devToken, 'Send a remote testing message',
                 'Testing');
+              Alert.alert(`The notification will trigger after 5s. You have to
+                go back to desktop`);
             }}>
             Request
           </Text>
           <Text style={[styles.instructions, styles.button]}
             onPress={() => {
               Remote.broadcast('Send a remote testing broadcast', 'Testing');
+              Alert.alert(`The notification will trigger after 5s. You have to
+                go back to desktop`);
             }}
           >
             Broadcast

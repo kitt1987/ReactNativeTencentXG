@@ -10,7 +10,6 @@ function nothing() {}
 
 function allEvents() {
   return [
-    XG.LocalNotificationEvent,
     XG.RemoteNotificationEvent,
     XG.RegisteredEvent,
     XG.FailureEvent
