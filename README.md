@@ -149,8 +149,8 @@ You will use or get this sort of notification when a remote or local notificatio
 ```
 
 # Event
-There are 3 sort of events TXG supported. You could call
-1.
+There are 3 sort of events TXG supported.
+
 Event|Argument|When to file
 -----|--------|------------
 'notification'|notification|on remote or local notification receive
