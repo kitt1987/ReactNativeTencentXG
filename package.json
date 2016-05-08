@@ -1,8 +1,7 @@
 {
   "name": "react-native-tencent-xg",
-  "version": "0.1.0",
-  "scripts": {
-  },
+  "version": "0.1.1",
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:kitt1987/ReactNativeTencentXG.git"
