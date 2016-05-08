@@ -69,7 +69,7 @@ module.exports = {
   register,
   scheduleLocalNotification,
   disableIOS: nothing,
-  enableDebug: enable => XG.enableDebug(enable || true),
+  enableDebug: enable => XG.enableDebug(enable === undefined ? true : enable),
   setCredential: (accessId, accessKey) => {
     return XG.setCredential(accessId, accessKey);
   },

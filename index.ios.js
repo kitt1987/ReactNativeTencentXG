@@ -52,19 +52,26 @@ module.exports = {
   addEventListener,
   allEvents,
   scheduleLocalNotification,
-  disableIOS: () => disableIOS = true,
-  enableDebug: enable => disableIOS || XG.enableDebug(enable || true),
+  disableIOS: disabled => disableIOS = (disabled === undefined ? true : disabled),
+  enableDebug: enable => {
+    return disableIOS || XG.enableDebug(enable === undefined ? true : enable);
+  },
   setCredential: (accessId, accessKey) => {
     return disableIOS || XG.setCredential(accessId, accessKey);
   },
   register: (account, permissions) => {
     return disableIOS || XG.register(account, permissions);
   },
-  checkPermissions: () => disableIOS || XG.checkPermissions(),
+  checkPermissions: () => {
+    if (disableIOS) return Promise.resolve(disableIOS);
+    return XG.checkPermissions();
+  },
   getApplicationIconBadgeNumber: () => {
-    return disableIOS || XG.getApplicationIconBadgeNumber();
+    if (disableIOS) return Promise.resolve();
+    return XG.getApplicationIconBadgeNumber();
   },
   setApplicationIconBadgeNumber: number => {
+    if (disableIOS) return;
     return XG.setApplicationIconBadgeNumber(number);
   },
   cancelLocalNotifications: userInfo => {

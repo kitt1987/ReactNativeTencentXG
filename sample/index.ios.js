@@ -78,11 +78,13 @@ class sample extends Component {
 
     // Your accessId as number and your accessKey
     XG.setCredential(2200197326, 'I2A3YPU353TN');
-    XG.register('SampleTester');
+    XG.register('SampleTester', {alert: true, badge: true, sound: true});
     XG.getApplicationIconBadgeNumber()
       .then(badgeNum => {
         this.setState({badgeNum});
       })
+      .then(() => XG.checkPermissions())
+      .then(data => console.log(data));
   }
 
   componentWillUnmount() {
@@ -160,19 +162,37 @@ class sample extends Component {
             onPress={() => {
               Remote.push(this.state.devToken, 'Send a remote testing message',
                 'Testing');
-              Alert.alert(`The notification will trigger after 5s. You have to
-                go back to desktop`);
+              Alert.alert(`Only my personal testing device could receive this after 5s.
+                You have to go back to desktop`);
             }}>
             Request
           </Text>
           <Text style={[styles.instructions, styles.button]}
             onPress={() => {
               Remote.broadcast('Send a remote testing broadcast', 'Testing');
-              Alert.alert(`The notification will trigger after 5s. You have to
-                go back to desktop`);
+              Alert.alert(`Only my personal testing device could receive this after 5s.
+                You have to go back to desktop`);
             }}
           >
             Broadcast
+          </Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.instructions}>Disable on iOS</Text>
+          <Text style={[styles.instructions, styles.button]}
+            onPress={() => {
+              XG.disableIOS();
+              Alert.alert('XG is disabled on iOS');
+            }}>
+            Disable
+          </Text>
+          <Text style={[styles.instructions, styles.button]}
+            onPress={() => {
+              XG.disableIOS(false);
+              Alert.alert('XG is enabled');
+            }}
+          >
+            Enable
           </Text>
         </View>
     </View>

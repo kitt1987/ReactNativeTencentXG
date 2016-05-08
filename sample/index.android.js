@@ -83,6 +83,8 @@ class sample extends Component {
       .then(badgeNum => {
         this.setState({badgeNum});
       })
+      .then(() => XG.checkPermissions())
+      .then(data => console.log(data));
   }
 
   componentWillUnmount() {
@@ -176,6 +178,24 @@ class sample extends Component {
             }}
           >
             Broadcast
+          </Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.instructions}>Disable on iOS</Text>
+          <Text style={[styles.instructions, styles.button]}
+            onPress={() => {
+              XG.disableIOS();
+              Alert.alert('XG is disabled on iOS');
+            }}>
+            Disable
+          </Text>
+          <Text style={[styles.instructions, styles.button]}
+            onPress={() => {
+              XG.disableIOS(false);
+              Alert.alert('XG is enabled');
+            }}
+          >
+            Enable
           </Text>
         </View>
     </View>
