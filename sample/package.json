@@ -9,6 +9,6 @@
     "query-string": "^4.1.0",
     "react": "^0.14.8",
     "react-native": "^0.24.1",
-    "react-native-tencent-xg": "^0.1.0"
+    "react-native-tencent-xg": "file:///Users/KH/Documents/js/ReactNativeTencentXG"
   }
 }

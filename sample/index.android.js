@@ -58,7 +58,6 @@ class sample extends Component {
       console.log('Fail to add event to handle remote notification');
 
     var localHolder = XG.addEventListener('localNotification', xgInstance => {
-      console.log(xgInstance);
       this.setState({
         event: 'localNotification',
         eventArgs: JSON.stringify(xgInstance)

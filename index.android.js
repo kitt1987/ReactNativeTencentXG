@@ -8,6 +8,12 @@ var XG = NativeModules.TencentXG;
 
 function nothing() {}
 
+function padDateTime(text) {
+  text = '' + text;
+  if (text.length >= 2) return text;
+  return '0'.repeat(2 - text.length) + text;
+}
+
 function allEvents() {
   return [
     XG.RemoteNotificationEvent,
@@ -25,10 +31,10 @@ function register(account, ticket, ticketType, qua) {
 
 function scheduleLocalNotification(obj) {
   var date = new Date(obj.fireDate || Date.now());
-  var dateString = '' + date.getFullYear() + (date.getMonth() + 1) +
-    date.getDate();
-  var hourString = '' + date.getHours();
-  var minuteString = '' + date.getMinutes();
+  var dateString = '' + date.getFullYear() + padDateTime(date.getMonth() + 1) +
+    padDateTime(date.getDate());
+  var hourString = padDateTime(date.getHours());
+  var minuteString = padDateTime(date.getMinutes());
   XG.addLocalNotification(obj.title, obj.alertBody, dateString, hourString,
       minuteString)
     .then(notificationID => {
