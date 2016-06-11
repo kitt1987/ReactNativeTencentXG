@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.content.IntentFilter;
@@ -30,8 +33,6 @@ import com.tencent.android.tpush.XGPushBaseReceiver;
 
 public class TencentXGModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
-    private Context context;
-    private ReactApplicationContext reactContext;
     private BroadcastReceiver innerReceiver;
     private IntentFilter innerFilter;
     private static final String LogTag = "[TXG]RNModule";
@@ -42,8 +43,6 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
     public TencentXGModule(ReactApplicationContext reactContext) {
         super(reactContext);
-        this.reactContext = reactContext;
-        this.context = reactContext.getApplicationContext();
         innerReceiver = new InnerMessageReceiver(this);
 
         innerFilter = new IntentFilter();
@@ -54,8 +53,8 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
         innerFilter.addAction(XGMessageReceiver.MActionTagSetting);
         innerFilter.addAction(XGMessageReceiver.MActionTagDeleting);
         innerFilter.addAction(XGMessageReceiver.MActionClickNotification);
-        LocalBroadcastManager.getInstance(this.context).registerReceiver(this.innerReceiver,
-                this.innerFilter);
+        LocalBroadcastManager.getInstance(this.getReactApplicationContext()).registerReceiver(
+                this.innerReceiver, this.innerFilter);
         reactContext.addLifecycleEventListener(this);
     }
 
@@ -76,7 +75,7 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
     @ReactMethod
     public void registerPush() {
-        XGPushManager.registerPush(this.context, new XGIOperateCallback() {
+        XGPushManager.registerPush(this.getReactApplicationContext(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
                 sendEvent(RCTRegisteredEvent, data);
@@ -91,7 +90,8 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
     @ReactMethod
     public void registerPushAndBindAccount(String account) {
-        XGPushManager.registerPush(this.context, account, new XGIOperateCallback() {
+        XGPushManager.registerPush(this.getReactApplicationContext(), account,
+                new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
                 sendEvent(RCTRegisteredEvent, data);
@@ -106,7 +106,8 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
     @ReactMethod
     public void registerPushWithTicket(String account, String ticket, int ticketType, String qua) {
-      XGPushManager.registerPush(this.context, account, ticket, ticketType, qua, new XGIOperateCallback() {
+      XGPushManager.registerPush(this.getReactApplicationContext(), account, ticket, ticketType,
+              qua, new XGIOperateCallback() {
           @Override
           public void onSuccess(Object data, int flag) {
               sendEvent(RCTRegisteredEvent, data);
@@ -121,17 +122,17 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
     @ReactMethod
     public void unregisterPush() {
-      XGPushManager.unregisterPush(this.context);
+      XGPushManager.unregisterPush(this.getReactApplicationContext());
     }
 
     @ReactMethod
     public void setTag(String tag) {
-      XGPushManager.setTag(this.context, tag);
+      XGPushManager.setTag(this.getReactApplicationContext(), tag);
     }
 
     @ReactMethod
     public void deleteTag(String tag) {
-      XGPushManager.deleteTag(this.context, tag);
+      XGPushManager.deleteTag(this.getReactApplicationContext(), tag);
     }
 
     @ReactMethod
@@ -144,21 +145,24 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
         local_msg.setDate(date);
         local_msg.setHour(hour);
         local_msg.setMin(minute);
-        long notificationID = XGPushManager.addLocalNotification(this.context, local_msg);
+        long notificationID = XGPushManager.addLocalNotification(this.getReactApplicationContext(),
+                local_msg);
         promise.resolve((int)notificationID);
     }
 
     @ReactMethod
     public void cancelLocalNotifications(Integer notificationID) {
         NotificationManager notificationManager =
-                (NotificationManager) this.reactContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                (NotificationManager) this.getReactApplicationContext().getSystemService(
+                        Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(notificationID);
     }
 
     @ReactMethod
     public void cancelAllLocalNotifications() {
         NotificationManager notificationManager =
-                (NotificationManager) this.reactContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                (NotificationManager) this.getReactApplicationContext().getSystemService(
+                        Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
     }
 
@@ -166,22 +170,22 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
     @ReactMethod
     public void enableDebug(Boolean enable) {
-        XGPushConfig.enableDebug(this.context, enable);
+        XGPushConfig.enableDebug(this.getReactApplicationContext(), enable);
     }
 
     @ReactMethod
     public void setCredential(Integer accessId, String accessKey) {
-        XGPushConfig.setAccessId(this.context, accessId);
-        XGPushConfig.setAccessKey(this.context, accessKey);
+        XGPushConfig.setAccessId(this.getReactApplicationContext(), accessId);
+        XGPushConfig.setAccessKey(this.getReactApplicationContext(), accessKey);
     }
 
     @ReactMethod
     public String getDeviceToken() {
-        return XGPushConfig.getToken(this.context);
+        return XGPushConfig.getToken(this.getReactApplicationContext());
     }
 
     private void sendEvent(String eventName, @Nullable Object params) {
-        this.reactContext
+        this.getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);
     }
@@ -197,7 +201,8 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
     @Override
     public void onHostDestroy() {
         Log.d(LogTag, "Unregister inner message receiver");
-        LocalBroadcastManager.getInstance(this.context).unregisterReceiver(this.innerReceiver);
+        LocalBroadcastManager.getInstance(this.getReactApplicationContext()).unregisterReceiver(
+                this.innerReceiver);
     }
 
     public void sendEvent(Intent intent) {

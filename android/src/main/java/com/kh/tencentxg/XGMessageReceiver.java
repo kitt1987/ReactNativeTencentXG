@@ -46,40 +46,40 @@ public class XGMessageReceiver extends XGPushBaseReceiver {
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 	}
 
-    @Override
-    public void onTextMessage(Context context, XGPushTextMessage message) {
-        if (context == null || message == null) return;
-        Log.d(LogTag, "Got text notification " + message.toString());
+  @Override
+  public void onTextMessage(Context context, XGPushTextMessage message) {
+      if (context == null || message == null) return;
+      Log.d(LogTag, "Got text notification " + message.toString());
 
-        Bundle payload = new Bundle();
-        payload.putString("Title", message.getTitle());
-        payload.putString("Content", message.getContent());
-        payload.putString("CustomContent", message.getCustomContent());
+      Bundle payload = new Bundle();
+      payload.putString("Title", message.getTitle());
+      payload.putString("Content", message.getContent());
+      payload.putString("CustomContent", message.getCustomContent());
 
-        Intent intent = new Intent(MActionCustomNotification);
-        intent.putExtra("data", payload);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-    }
+      Intent intent = new Intent(MActionCustomNotification);
+      intent.putExtra("data", payload);
+      LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+  }
 
-    @Override
-    public void onRegisterResult(Context context, int errorCode,
-                                 XGPushRegisterResult message) {
-        if (context == null || message == null) return;
-        Log.d(LogTag, "Got register result " + message.toString());
+  @Override
+  public void onRegisterResult(Context context, int errorCode,
+                               XGPushRegisterResult message) {
+      if (context == null || message == null) return;
+      Log.d(LogTag, "Got register result " + message.toString());
 
-        Bundle payload = new Bundle();
-        payload.putInt("errorCode", errorCode);
-        payload.putLong("AccessId", message.getAccessId());
-        payload.putString("Account", message.getAccount());
-        payload.putString("DeviceId", message.getDeviceId());
-        payload.putString("Ticket", message.getTicket());
-        payload.putShort("TicketType", message.getTicketType());
-        payload.putString("Token", message.getToken());
+      Bundle payload = new Bundle();
+      payload.putInt("errorCode", errorCode);
+      payload.putLong("AccessId", message.getAccessId());
+      payload.putString("Account", message.getAccount());
+      payload.putString("DeviceId", message.getDeviceId());
+      payload.putString("Ticket", message.getTicket());
+      payload.putShort("TicketType", message.getTicketType());
+      payload.putString("Token", message.getToken());
 
-        Intent intent = new Intent(MActionRegistration);
-        intent.putExtra("data", payload);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-    }
+      Intent intent = new Intent(MActionRegistration);
+      intent.putExtra("data", payload);
+      LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+  }
 
 	@Override
 	public void onUnregisterResult(Context context, int errorCode) {
