@@ -234,7 +234,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../react-native/React/**",
+					"$(PROJECT_DIR)/../../react-native/React/**",
 					"$(PROJECT_DIR)/sdk",
 				);
 				LIBRARY_SEARCH_PATHS = (
@@ -252,7 +252,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../react-native/React/**",
+					"$(PROJECT_DIR)/../../react-native/React/**",
 					"$(PROJECT_DIR)/sdk",
 				);
 				LIBRARY_SEARCH_PATHS = (

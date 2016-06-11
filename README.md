@@ -4,7 +4,7 @@ React Native component for Tencent message push service [XinGe(腾讯信鸽)](ht
 
 # SDK version
 * Android v2.45_20160510_1845
-* iOS 2.4.6
+* iOS 2.4.9
 
 # Installation
 
