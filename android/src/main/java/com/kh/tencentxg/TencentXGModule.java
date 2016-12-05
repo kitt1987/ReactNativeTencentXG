@@ -37,6 +37,7 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
     private static final String LogTag = "[TXG]RNModule";
     private static final String RCTLocalNotificationEvent = "localNotification";
     private static final String RCTRemoteNotificationEvent = "notification";
+    private static final String RCTNotificationClickedEvent = "notificationClicked";
     private static final String RCTRegisteredEvent = "register";
     private static final String RCTFailureEvent = "error";
 
