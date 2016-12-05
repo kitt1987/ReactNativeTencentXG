@@ -11,6 +11,7 @@ function nothing() {}
 function allEvents() {
   return [
     XG.RemoteNotificationEvent,
+    XG.RCTNotificationClickedEvent,
     XG.RegisteredEvent,
     XG.FailureEvent
   ];
