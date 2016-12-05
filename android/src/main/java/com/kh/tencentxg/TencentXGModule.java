@@ -270,7 +270,14 @@ public class TencentXGModule extends ReactContextBaseJavaModule implements Lifec
 
             case XGMessageReceiver.MActionClickNotification:
                 Log.d(LogTag, "Got notification clicking result " + payload.toString());
-//                sendEvent(RCTRegisteredEvent, payload);
+                params = Arguments.createMap();
+                params.putString("Content", payload.getString("Content"));
+                params.putString("Title", payload.getString("Title"));
+                params.putInt("MsgId", (int)payload.getLong("MsgId"));
+                params.putInt("NotificationId", (int)payload.getLong("NotificationId"));
+                params.putInt("NActionType", (int)payload.getLong("NActionType"));
+                params.putString("CustomContent", payload.getString("CustomContent"));
+                sendEvent(RCTNotificationClickedEvent, params);
                 break;
         }
     }
